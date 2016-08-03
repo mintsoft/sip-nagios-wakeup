@@ -4,7 +4,8 @@ sip-nagios-wakeup
 WTF are you doing?
 ------------------
 
-Yes exactly; email, push notifications etc just don't work that well. 
+Yes exactly. Email, push notifications etc just don't work that well. 
+
 We find that:
 
 * GMail client sometimes just doesn't notify that an email has arrived until the user manually polls (not so useful if asleep)
