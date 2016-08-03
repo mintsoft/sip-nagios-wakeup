@@ -5,6 +5,7 @@ use warnings;
 
 use Getopt::Long qw(:config posix_default bundling);
 use Net::SIP;
+use Data::Dump qw(dump);
 
 my ($to, $registrar, $username, $password);
 
@@ -22,15 +23,15 @@ my $ua = Net::SIP::Simple->new(
     auth => [$username, $password]
 );
 
-$ua->register(expires => 10) || die "Registration failed: $ua->error";
+$ua->register(expires => 10) || die "Registration failed: " . dump($ua->error);
 
 my $rtp_done = 1;
 my $call = $ua->invite(
     $to,
     asymetric_rtp => 0,
-    rtp_param => [ 8, 160, 160/8000, 'PCMA/8000' ],
+    rtp_param => [8, 160, 160/8000, 'PCMA/8000'],
 );
-die "Invitation failed: $ua->error" unless $call;
+die "Invitation failed: " . dump($ua->error) unless $call;
 
-$ua->loop( 5, \$rtp_done );
+$ua->loop(5, \$rtp_done);
 $call->bye;
