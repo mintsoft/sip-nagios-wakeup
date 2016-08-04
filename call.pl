@@ -25,7 +25,6 @@ my $ua = Net::SIP::Simple->new(
 
 $ua->register(expires => 10) || die "Registration failed: " . dump($ua->error);
 
-my $rtp_done = 1;
 my $call = $ua->invite(
     $to,
     asymetric_rtp => 0,
@@ -33,5 +32,9 @@ my $call = $ua->invite(
 );
 die "Invitation failed: " . dump($ua->error) unless $call;
 
-$ua->loop(5, \$rtp_done);
+my $rejectedCall = defined $call->{'last_error'};
+
 $call->bye;
+
+exit 1 if $rejectedCall;
+exit 0;
