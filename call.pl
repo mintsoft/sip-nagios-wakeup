@@ -32,9 +32,9 @@ my $call = $ua->invite(
 );
 die "Invitation failed: " . dump($ua->error) unless $call;
 
-my $rejectedCall = defined $call->{'last_error'};
+my $failedCall = defined $call->{'last_error'};
 
 $call->bye;
 
-exit 1 if $rejectedCall;
+exit 1 if $failedCall;
 exit 0;
